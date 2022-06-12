@@ -21,7 +21,7 @@
 *.tar.gz
 *.rar
 
-
+/.vscode/
 /target/
 .idea
 *.iml

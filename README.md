@@ -2,15 +2,15 @@
 
 ## Edgar Ronaldo Henao V.
 
-El presente proyecto permite a sus usuarios dibujar figuras en un tablero compartido, permitiendo la realizacion de estructuras graficas por medio de la utilizacion de figuras geométricas. El proyecto permite la interacción entre los usuarios que están interactuano con el tablero.
+Resumen en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
 ### Descripción del producto
 
-
+Descripcion en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
 ### Historias de uso
 
-
+Historias de uso en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
 ### Licensia
 
