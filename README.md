@@ -16,7 +16,7 @@ Historias de uso en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://proyectoarsw2022.herokuapp.com)
 
-### Licensia
+### Licencia
 
 Este proyecto esta bajo la licencia [GNU General Public License v2.0]() de uso libre. 
 
