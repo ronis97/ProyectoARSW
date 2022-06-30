@@ -18,6 +18,8 @@
 //           );
 //       }
 //  }
+var flag;
+var figure; 
 
 class BBCanvas extends React.Component {
     constructor(props) {
@@ -33,8 +35,6 @@ class BBCanvas extends React.Component {
         this.state = {loadingState: 'Loading Canvas ...'}
         let wsreference = this.comunicationWS; 
         this.sketch = function (p) {
-            let x = 100;
-            let y = 100;
             p.setup = function () {
                 p.createCanvas(700, 410);
             };
@@ -46,6 +46,10 @@ class BBCanvas extends React.Component {
                 }
                 if (p.mouseIsPressed === false) {
                     p.fill(255, 255, 255);
+                }
+                if (flag){
+                    p.clear();
+                    flag = false;
                 }
             };
             
@@ -60,6 +64,7 @@ class BBCanvas extends React.Component {
     
     componentDidMount() {
         this.myp5 = new p5(this.sketch, 'container');
+        flag = false;
         this.setState({loadingState: 'Canvas Loaded'});
     }
     render()
@@ -70,6 +75,15 @@ class BBCanvas extends React.Component {
             </div>);
         }
 }
+
+function changeFigure(){
+    listOfFigures = ["circle", "triangle", "square"];
+    figure = listOfFigures[Math.random(3)]
+}
+
+function restart(){
+    flag = true;
+}
 function BBServiceURL() {
     var host = window.location.host;
     var url = 'wss://' + (host) + '/bbService';
@@ -78,12 +92,19 @@ function BBServiceURL() {
 }
 
 function restart(){
-
+    flag = true;
 }
 class Editor extends React.Component {
     render() {
         return (
             <div>
+            <button type="button" class="button" onClick={restart}>    
+                Reiniciar
+            </button>
+            <div class="divider"></div>
+            <button type="button" class="button" onClick={changeFigure}>
+                Cambiar Figura
+            </button>
             <div id="container"></div>
             <BBCanvas class="tablero"/> 
             </div>
