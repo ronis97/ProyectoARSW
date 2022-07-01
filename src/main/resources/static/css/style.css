@@ -22,10 +22,6 @@ body{
     height: auto;
     display: inline-block;
 }
-:root{
-    border: 0.1px;
-    border-style: dotted;
-}
 
 /*
 Como ponerle css a los elementos render de R
