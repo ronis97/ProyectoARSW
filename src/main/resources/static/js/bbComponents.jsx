@@ -52,6 +52,9 @@ class BBCanvas extends React.Component {
                     flag = false;
                 }
             };
+            p.rectangle = function(){
+
+            }
             
         }
     }

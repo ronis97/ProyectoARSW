@@ -8,13 +8,22 @@
     <link rel="stylesheet" href="css/style.css" />
     
     <h1>Bienvenido a Drawing Figurines</h1>
-    <button type="button" class="button" onClick=restart()>    
-        Reiniciar
-    </button>
-    <div class="divider"></div>
-    <button id="btn2" type="button" class="button" onClick="changeFigure()" value="">
-        Cambiar figura
-    </button>
+    <div class="botones">
+        <button type="button" class="button" onClick=restart()>    
+            Reiniciar
+        </button>
+        <div class="divider"></div>
+        <button id="btn2" type="button" class="button" onClick="changeFigure()" value="">
+            Cambiar figura
+        </button>
+        <div class="divider"></div>
+        <button id="btn3" type="button" class="button" onClick="changeSize()" value="">
+            Cambiar tamaño
+        </button>
+        <div class="divider"></div>
+    </div>
+    <!--<button id="btn4" type="button" class="button" onClick="refresh()" value="">Actualizar</button>-->
+    
 
     
 
@@ -40,7 +49,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <p></p>
     <p></p>
-    <div id="p5Sketch"></div>
+    <div id="p5Sketch" class="tablero"></div>
     
     <!-- Load our React component. -->
     <script src="js/interactiveBoard.jsx" type="text/babel"></script>
