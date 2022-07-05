@@ -5,6 +5,8 @@ let index = 0;
 let typeFigure = null;
 let sizeOfFigure = 20;
 let user = null;
+let lastx = 0;
+let lasty = 0;
 const setup = (p5) => {
 
     
@@ -27,6 +29,8 @@ const setup = (p5) => {
     p5.mouseClicked = () => {
         
         if (isValid(p5.mouseX, p5.mouseY)){
+            lastx = p5.mouseX;
+            lasty = p5.mouseY;
             let figure = null;
             if(typeFigure === "circulo"){
                 figure = p5.ellipse(p5.mouseX,p5.mouseY,sizeOfFigure,sizeOfFigure);
@@ -120,17 +124,30 @@ function requestUserName(){
     //return user;
 }
 
-function isValid(x, y){
+function isValid(xx, yy){
     let isValid = false;
-    if (x > 0 && y > 0 && x < width && y < height){
+    if (xx > 0 && yy > 0 && xx < width && yy < height){
         isValid = true;
     }
     else {isValid = false;}
-    let data = [x,y];
-    isValid = axios.get('validatePoint',data);
+    if (lastx === xx && lasty === yy){
+        isValid = false;
+    }
     return isValid;
 }
 
+function hideElement(element){
+    element.style.display = 'none';
+}
+
+function showElement(element){
+    element.style.display = 'flex';
+}
+
+function changeColor(){
+    hideElement(document.getElementById('p5Sketch'));
+    showElement(document.getElementById('colorConfiguration'));
+}
 
 
 let myp5 = new p5(setup,document.getElementById('p5Sketch'));

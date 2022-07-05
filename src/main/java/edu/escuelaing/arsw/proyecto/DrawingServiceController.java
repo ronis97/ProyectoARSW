@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.escuelaing.arsw.proyecto.entities.Point;
 import edu.escuelaing.arsw.proyecto.entities.User;
 import edu.escuelaing.arsw.proyecto.entities.Board;
 import edu.escuelaing.arsw.proyecto.entities.Color;
+import edu.escuelaing.arsw.proyecto.entities.Coordinate;
+
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -62,9 +64,6 @@ public class DrawingServiceController {
         Board.getInstance().eraseLast();
     }
 
-    @GetMapping("/validatePoint")
-    public boolean validatePoint(@RequestBody int[] data){
-        return Board.getInstance().isValid(data[0], data[1]);
-    }
+    
 
 }

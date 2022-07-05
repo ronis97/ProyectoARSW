@@ -23,6 +23,13 @@ body{
     margin-right: auto;
     justify-content: center;
 }
+.botones2{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
 .divider{
     width: 50px;
     height: auto;
@@ -37,4 +44,13 @@ body{
     border-style: dashed;
     border-color: brown;
     box-sizing: border-box;
+}
+.colorData{
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+.datos{
+    
 }

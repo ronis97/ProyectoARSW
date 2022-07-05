@@ -21,10 +21,18 @@
             Cambiar tamaño
         </button>
         <div class="divider"></div>
+    </div>
+    <p></p>
+    <div class="botones2">
         <button id="btn4" type="button" class="button" onClick="deleteLastFigure()" value="">
             Borrar ultima figura
         </button>
+        <div class="divider"></div>
+        <button id="btn5" type="button" class="button" onClick="changeColor()">
+            Cambiar color
+        </button>
     </div>
+    
     <!--<button id="btn4" type="button" class="button" onClick="refresh()" value="">Actualizar</button>-->
     
 
@@ -53,7 +61,14 @@
     <p></p>
     <p></p>
     <div id="p5Sketch" class="tablero"></div>
-    
+    <div id="colorConfiguration" class="colorData">
+        <p></p>
+        <p></p>
+        <label class="datos">
+            R (cantidad de rojo) 
+        </label>
+        <input type="text" id="r" name="r" class="datos">
+    </div>
     <!-- Load our React component. -->
     <script src="js/interactiveBoard.jsx" type="text/babel"></script>
 </body>
