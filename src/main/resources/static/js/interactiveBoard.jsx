@@ -26,38 +26,33 @@ const setup = (p5) => {
         //p5.fill(255,255,255);
         //p5.rect(0,0,width,height);
         //resetea el tablero
-    
-
     };
     p5.mouseClicked = () => {
-        
         if (isValid(p5.mouseX, p5.mouseY)){
             lastx = p5.mouseX;
             lasty = p5.mouseY;
-            let figure = null;
+            p5.fill(rColor,gColor,bColor);
             if(typeFigure === "circulo"){
-                figure = p5.ellipse(p5.mouseX,p5.mouseY,sizeOfFigure,sizeOfFigure);
-                p5.fill(rColor,gColor,bColor);
+                p5.ellipse(p5.mouseX,p5.mouseY,sizeOfFigure,sizeOfFigure);  
             }
             else if (typeFigure === "triangulo"){
-                figure = p5.triangle(p5.mouseX -(sizeOfFigure/2), p5.mouseY - (sizeOfFigure/2),
+                p5.triangle(p5.mouseX -(sizeOfFigure/2), p5.mouseY - (sizeOfFigure/2),
                     p5.mouseX + (sizeOfFigure/2), p5.mouseY- (sizeOfFigure/2), 
                     p5.mouseX + (sizeOfFigure/4), p5.mouseY + (sizeOfFigure/4));     
             }
             else if (typeFigure === "cuadrado"){
-                figure = p5.square(p5.mouseX, p5.mouseY, sizeOfFigure);
+                p5.square(p5.mouseX, p5.mouseY, sizeOfFigure);
                 //console.log(p5.mouseX,p5.mouseY);
                 //console.log(figure)
             }
+            //refresh();
             var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, size:sizeOfFigure, nameuser:user}
             console.log(dataFigure);
             console.log(user);
             axios.post('/drawpoints',dataFigure);
         }   
     };
-    
 };
-
 
 function refresh(){
     var points = axios.get('/drawpoints').then( points => {
@@ -145,7 +140,12 @@ function hideElement(element){
 
 function showElement(element){
     console.log(typeof element)
-    element.style.display = 'grid';
+    if (element.id === "colorConfiguration"){
+        element.style.display = 'grid';
+    }
+    else{
+        element.style.display = 'flex';
+    }
 }
 
 function changeColor(){
@@ -160,14 +160,20 @@ function submitValues(){
     let gg = document.getElementById('g').value;
     let bb = document.getElementById('b').value;
     console.log(rr);
-    console.log(gg == null)
-    while (rr == null || gg == null || bb == null){
-        console.log(rr);
+    if (rr ==="" || gg ==="" || bb === ""){
         document.getElementById('info').innerHTML 
             = "Alguno de los valores ingresados es nulo";
     }
+    else{
+        rColor = rr;
+        gColor = gg;
+        bColor = bb;
+        hideElement(document.getElementById('colorConfiguration'));
+        showElement(document.getElementById('botones'));
+        showElement(document.getElementById('botones1'));
+        showElement(document.getElementById('p5Sketch'));
+    }
 }
-
 
 let myp5 = new p5(setup,document.getElementById('p5Sketch'));
 requestUserName();
