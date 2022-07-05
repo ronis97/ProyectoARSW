@@ -8,30 +8,7 @@
     <link rel="stylesheet" href="css/style.css" />
     
     <h1>Bienvenido a Drawing Figurines</h1>
-    <div class="botones">
-        <button type="button" class="button" onClick=restart()>    
-            Reiniciar
-        </button>
-        <div class="divider"></div>
-        <button id="btn2" type="button" class="button" onClick="changeFigure()" value="">
-            Cambiar figura
-        </button>
-        <div class="divider"></div>
-        <button id="btn3" type="button" class="button" onClick="changeSize()" value="">
-            Cambiar tamaño
-        </button>
-        <div class="divider"></div>
-    </div>
-    <p></p>
-    <div class="botones2">
-        <button id="btn4" type="button" class="button" onClick="deleteLastFigure()" value="">
-            Borrar ultima figura
-        </button>
-        <div class="divider"></div>
-        <button id="btn5" type="button" class="button" onClick="changeColor()">
-            Cambiar color
-        </button>
-    </div>
+    
     
     <!--<button id="btn4" type="button" class="button" onClick="refresh()" value="">Actualizar</button>-->
     
@@ -50,7 +27,30 @@
 </head>
 <body>
 
-        
+    <div class="botones" id="botones">
+        <button type="button" class="button" onClick=restart()>    
+            Reiniciar
+        </button>
+        <div class="divider"></div>
+        <button id="btn2" type="button" class="button" onClick="changeFigure()" value="">
+            Cambiar figura
+        </button>
+        <div class="divider"></div>
+        <button id="btn3" type="button" class="button" onClick="changeSize()" value="">
+            Cambiar tamaño
+        </button>
+        <div class="divider"></div>
+    </div>
+    <p></p>
+    <div class="botones2" id="botones1">
+        <button id="btn4" type="button" class="button" onClick="deleteLastFigure()" value="">
+            Borrar ultima figura
+        </button>
+        <div class="divider"></div>
+        <button id="btn5" type="button" class="button" onClick="changeColor()">
+            Cambiar color
+        </button>
+    </div>
     <script src="https://unpkg.com/react@16/umd/react.development.js"
             crossorigin></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
@@ -61,13 +61,25 @@
     <p></p>
     <p></p>
     <div id="p5Sketch" class="tablero"></div>
-    <div id="colorConfiguration" class="colorData">
-        <p></p>
-        <p></p>
+    <div id="colorConfiguration" class="wrapper">
         <label class="datos">
-            R (cantidad de rojo) 
+            R (cantidad de rojo 0-255) 
         </label>
-        <input type="text" id="r" name="r" class="datos">
+        <input type="text" id="r" name="r" class="datos" >
+        <label class="datos">
+            G (cantidad de verde 0-255)
+        </label>
+        <input type="text" id="g" name="g" class="datos" >
+        <label class="datos">
+            B (cantidad de azul 0-255)
+        </label>
+        <input type="text" id="b" name="b" class="datos" >
+        <button id="btn6" type="button" class="button" onClick="submitValues()">
+            Cambiar color
+        </button>
+        <label class="datos"  id="info">
+            Ingrese los valores RGB
+        </label>
     </div>
     <!-- Load our React component. -->
     <script src="js/interactiveBoard.jsx" type="text/babel"></script>

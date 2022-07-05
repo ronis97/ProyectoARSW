@@ -7,6 +7,9 @@ let sizeOfFigure = 20;
 let user = null;
 let lastx = 0;
 let lasty = 0;
+let rColor = 255;
+let gColor = 255;
+let bColor = 255;
 const setup = (p5) => {
 
     
@@ -34,7 +37,7 @@ const setup = (p5) => {
             let figure = null;
             if(typeFigure === "circulo"){
                 figure = p5.ellipse(p5.mouseX,p5.mouseY,sizeOfFigure,sizeOfFigure);
-                p5.fill(255,255,255);
+                p5.fill(rColor,gColor,bColor);
             }
             else if (typeFigure === "triangulo"){
                 figure = p5.triangle(p5.mouseX -(sizeOfFigure/2), p5.mouseY - (sizeOfFigure/2),
@@ -141,12 +144,28 @@ function hideElement(element){
 }
 
 function showElement(element){
-    element.style.display = 'flex';
+    console.log(typeof element)
+    element.style.display = 'grid';
 }
 
 function changeColor(){
     hideElement(document.getElementById('p5Sketch'));
+    hideElement(document.getElementById('botones'));
+    hideElement(document.getElementById('botones1'));
     showElement(document.getElementById('colorConfiguration'));
+}
+
+function submitValues(){
+    let rr = document.getElementById('r').value;
+    let gg = document.getElementById('g').value;
+    let bb = document.getElementById('b').value;
+    console.log(rr);
+    console.log(gg == null)
+    while (rr == null || gg == null || bb == null){
+        console.log(rr);
+        document.getElementById('info').innerHTML 
+            = "Alguno de los valores ingresados es nulo";
+    }
 }
 
 
