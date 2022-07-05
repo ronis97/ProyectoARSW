@@ -5,6 +5,7 @@ public class Point {
     private int y;
     private String type;
     private int size;
+    private String nameuser;
 
 
     public int getX() {
@@ -38,5 +39,14 @@ public class Point {
     public void setSize(int size){
         this.size = size;
     }
+
+    public String getnameuser(){
+        return this.nameuser;
+    }
+
+    public void setnameuser(String nameuser){
+        this.nameuser = nameuser;
+    }
+
     
 }

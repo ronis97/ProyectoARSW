@@ -4,6 +4,7 @@ let height = 400;
 let index = 0;
 let typeFigure = null;
 let sizeOfFigure = 20;
+let user = null;
 const setup = (p5) => {
 
     
@@ -41,8 +42,9 @@ const setup = (p5) => {
                 //console.log(p5.mouseX,p5.mouseY);
                 //console.log(figure)
             }
-            var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, size:sizeOfFigure}
+            var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, size:sizeOfFigure, nameuser:user}
             console.log(dataFigure);
+            console.log(user);
             axios.post('/drawpoints',dataFigure);
         }   
     };
@@ -57,6 +59,7 @@ function refresh(){
             for (var i = 0; i < points.data.length; i++){
                 sizeOfFigure = points.data[i].size;
                 typeFigure = points.data[i].type;
+                //user = points.data[i].nameuser;
                 putFigure(points.data[i].x, points.data[i].y,points.data[i].type);
             }
 
@@ -83,6 +86,12 @@ function restart(){
     axios.post('/restart');
 }
 
+function deleteLastFigure(){
+    axios.post('/eraseLast');
+    myp5.clear();
+    refresh();
+}
+
 function changeFigure(){
     var btn = document.getElementById("btn2");
     btn.value = "value"
@@ -102,16 +111,28 @@ function changeSize(){
     sizeOfFigure = parseInt(value);
 }
 
+function requestUserName(){
+    user = window.prompt("Ingrese su nombre de usuario: ");
+    while (user == null){
+        user = window.prompt("No ha ingresado un usuario: ")
+    }
+    console.log(user);
+    //return user;
+}
+
 function isValid(x, y){
     let isValid = false;
     if (x > 0 && y > 0 && x < width && y < height){
         isValid = true;
     }
     else {isValid = false;}
+    let data = [x,y];
+    isValid = axios.get('validatePoint',data);
     return isValid;
 }
 
 
 
 let myp5 = new p5(setup,document.getElementById('p5Sketch'));
+requestUserName();
 refresh();

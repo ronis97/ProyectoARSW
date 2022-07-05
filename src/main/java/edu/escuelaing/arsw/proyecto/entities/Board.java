@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board {
 
-    private List<User> userList = new ArrayList<User>();
+    private List<String> userList = new ArrayList<String>();
     private List<Point> pointList = new ArrayList<Point>();
     private static final Board instance = new Board();
 
@@ -13,7 +13,7 @@ public class Board {
         return instance;
     }
 
-    public void addUser(User user){
+    public void addUser(String user){
         userList.add(user);
     }
 
@@ -28,11 +28,11 @@ public class Board {
         pointList.clear();
     }
 
-    public List<User> getUserList() {
+    public List<String> getUserList() {
         return userList;
     }
 
-    public void setUserList(List<User> userList) {
+    public void setUserList(List<String> userList) {
         this.userList = userList;
     }
 
@@ -43,5 +43,21 @@ public class Board {
     public void setPointList(List<Point> pointList) {
         this.pointList = pointList;
     }
+
+    public void eraseLast(){
+        pointList.remove(pointList.size()-1);
+    }
+
+    public boolean isValid(int x, int y){
+        boolean isValid = true;
+        for (Point i: pointList){
+            if (i.getX() == x && i.getY() == y){ 
+                isValid = false;
+                break;
+            }
+        }
+        return isValid;
+    }
+
 
 }

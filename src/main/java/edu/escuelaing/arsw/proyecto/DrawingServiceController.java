@@ -38,6 +38,7 @@ public class DrawingServiceController {
     @GetMapping("/drawpoints")
     public List<Point> getAllPoints(){
         System.out.print(Board.getInstance().getPointList().size());
+        //System.out.println(Board.getInstance().getPointList().get(0).getUserName());
         return Board.getInstance().getPointList();
     }
 
@@ -56,5 +57,14 @@ public class DrawingServiceController {
         return null;
     }
 
+    @PostMapping("/eraseLast")
+    public void eraseLastObject(){
+        Board.getInstance().eraseLast();
+    }
+
+    @GetMapping("/validatePoint")
+    public boolean validatePoint(@RequestBody int[] data){
+        return Board.getInstance().isValid(data[0], data[1]);
+    }
 
 }
