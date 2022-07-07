@@ -46,7 +46,9 @@ const setup = (p5) => {
                 //console.log(figure)
             }
             //refresh();
-            var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, size:sizeOfFigure, nameuser:user}
+            var colorData = {r:rColor, g:gColor, b: bColor}
+            var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, 
+                size:sizeOfFigure, nameuser:user, color:colorData}
             console.log(dataFigure);
             console.log(user);
             axios.post('/drawpoints',dataFigure);
@@ -61,6 +63,9 @@ function refresh(){
             for (var i = 0; i < points.data.length; i++){
                 sizeOfFigure = points.data[i].size;
                 typeFigure = points.data[i].type;
+                rColor = points.data[i].color.r;
+                gColor = points.data[i].color.g;
+                bColor = points.data[i].color.b;
                 //user = points.data[i].nameuser;
                 putFigure(points.data[i].x, points.data[i].y,points.data[i].type);
             }
@@ -70,6 +75,7 @@ function refresh(){
 }
 
 function putFigure(x,y,typeOfFigure){
+    myp5.fill(rColor,gColor,bColor);
     if (typeOfFigure == "circulo"){
         myp5.ellipse(x,y,sizeOfFigure,sizeOfFigure);
     }

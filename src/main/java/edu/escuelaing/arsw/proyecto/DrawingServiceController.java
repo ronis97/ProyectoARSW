@@ -1,18 +1,13 @@
 package edu.escuelaing.arsw.proyecto;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.escuelaing.arsw.proyecto.entities.Point;
-import edu.escuelaing.arsw.proyecto.entities.User;
 import edu.escuelaing.arsw.proyecto.entities.Board;
-import edu.escuelaing.arsw.proyecto.entities.Color;
-import edu.escuelaing.arsw.proyecto.entities.Coordinate;
 
 import java.util.List;
 import javax.annotation.Resource;
@@ -52,11 +47,6 @@ public class DrawingServiceController {
     @PostMapping("/restart")
     public void restart(){
         Board.getInstance().restart();
-    }
-
-    @GetMapping("/getusercolor")
-    public Color getUserColor(){
-        return null;
     }
 
     @PostMapping("/eraseLast")

@@ -6,6 +6,7 @@ public class Point {
     private String type;
     private int size;
     private String nameuser;
+    private Color color;
 
 
     public int getX() {
@@ -48,5 +49,12 @@ public class Point {
         this.nameuser = nameuser;
     }
 
+    public Color getColor(){
+        return this.color;
+    }
+
+    public void setColor(Color color){
+        this.color = color;
+    }
     
 }
