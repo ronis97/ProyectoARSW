@@ -10,6 +10,8 @@ let lasty = 0;
 let rColor = 255;
 let gColor = 255;
 let bColor = 255;
+let communicationWebSocket = new WebSocket(BBServiceURL());
+let msgSending = null;
 const setup = (p5) => {
 
     
@@ -49,8 +51,13 @@ const setup = (p5) => {
             var colorData = {r:rColor, g:gColor, b: bColor}
             var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, 
                 size:sizeOfFigure, nameuser:user, color:colorData}
-            console.log(dataFigure);
-            console.log(user);
+            //console.log(dataFigure);
+            //console.log(user);
+            msgSending = '{ "x": ' + (p5.mouseX) + ' "y": ' + (p5.mouseY) + ' "type": ' + typeFigure
+                + ' "size": ' + sizeOfFigure + ' "user": ' + user + ' "rCol": ' + rColor
+                + ' "gCol": ' + gColor + ' "bCol": ' + bColor + "}";
+            //console.log(msgSending);
+            communicationWebSocket.send(msgSending);
             axios.post('/drawpoints',dataFigure);
         }   
     };
@@ -94,6 +101,14 @@ function restart(){
     axios.post('/restart');
 }
 
+function BBServiceURL() {
+    var host = window.location.host;
+    var url = 'wss://' + (host) + '/bbService';
+    //var url = 'ws://' + (host) + '/bbService';
+    //console.log("URL Calculada: " + url);
+    return url;
+}
+
 function deleteLastFigure(){
     axios.post('/eraseLast');
     myp5.clear();
@@ -124,7 +139,7 @@ function requestUserName(){
     while (user == null){
         user = window.prompt("No ha ingresado un usuario: ")
     }
-    console.log(user);
+    //console.log(user);
     //return user;
 }
 
@@ -184,3 +199,14 @@ function submitValues(){
 let myp5 = new p5(setup,document.getElementById('p5Sketch'));
 requestUserName();
 refresh();
+communicationWebSocket.onopen = function () {
+    communicationWebSocket.send(msgSending);
+};
+
+communicationWebSocket.onmessage = function(e){
+    refresh();
+    let infoData = e.data;
+    console.log(infoData)
+    //infoData = JSON.parse(infoData);
+    //console.log(infodata);
+};
