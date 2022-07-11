@@ -54,8 +54,7 @@ const setup = (p5) => {
             //console.log(dataFigure);
             //console.log(user);
             msgSending = '{ "x": ' + (p5.mouseX) + ' "y": ' + (p5.mouseY) + ' "type": ' + typeFigure
-                + ' "size": ' + sizeOfFigure + ' "user": ' + user + ' "rCol": ' + rColor
-                + ' "gCol": ' + gColor + ' "bCol": ' + bColor + "}";
+                + ' "size": ' + sizeOfFigure + ' "user": ' + user  + "}";
             //console.log(msgSending);
             communicationWebSocket.send(msgSending);
             axios.post('/drawpoints',dataFigure);
@@ -99,12 +98,13 @@ function putFigure(x,y,typeOfFigure){
 function restart(){
     myp5.clear();
     axios.post('/restart');
+    refresh();
 }
 
 function BBServiceURL() {
     var host = window.location.host;
-    var url = 'wss://' + (host) + '/bbService';
-    //var url = 'ws://' + (host) + '/bbService';
+    //var url = 'wss://' + (host) + '/bbService';
+    var url = 'ws://' + (host) + '/bbService';
     //console.log("URL Calculada: " + url);
     return url;
 }
@@ -204,9 +204,13 @@ communicationWebSocket.onopen = function () {
 };
 
 communicationWebSocket.onmessage = function(e){
+    rColor = 255;
+    gColor = 255;
+    bColor = 255;
+    typeFigure = "cuadrado"
     refresh();
-    let infoData = e.data;
-    console.log(infoData)
     //infoData = JSON.parse(infoData);
     //console.log(infodata);
 };
+
+function isOpen(ws) { return ws.readyState === ws.OPEN }
