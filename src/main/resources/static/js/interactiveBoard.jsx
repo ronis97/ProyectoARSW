@@ -12,6 +12,7 @@ let gColor = 255;
 let bColor = 255;
 let communicationWebSocket = new WebSocket(BBServiceURL());
 let msgSending = null;
+let isReset = false;
 const setup = (p5) => {
 
     
@@ -53,8 +54,9 @@ const setup = (p5) => {
                 size:sizeOfFigure, nameuser:user, color:colorData}
             //console.log(dataFigure);
             //console.log(user);
-            msgSending = '{ "x": ' + (p5.mouseX) + ' "y": ' + (p5.mouseY) + ' "type": ' + typeFigure
-                + ' "size": ' + sizeOfFigure + ' "user": ' + user  + "}";
+            msgSending = '{ "x": ' + (p5.mouseX) + ' ,"y": ' + (p5.mouseY) + ' ,"type": "' + typeFigure
+                + '" ,"size": ' + sizeOfFigure + ' ,"user": "' + user  + '" ,"rCol": ' + rColor 
+                + ' ,"gCol": ' + gColor + ',"bCol": ' + bColor +'}';
             //console.log(msgSending);
             communicationWebSocket.send(msgSending);
             axios.post('/drawpoints',dataFigure);
@@ -99,6 +101,9 @@ function restart(){
     myp5.clear();
     axios.post('/restart');
     refresh();
+    isReset = true;
+    let msg = '{ "reset": "' + isReset + '"}';
+    communicationWebSocket.send(msg);
 }
 
 function BBServiceURL() {
@@ -203,14 +208,26 @@ communicationWebSocket.onopen = function () {
     communicationWebSocket.send(msgSending);
 };
 
+let infoData = "";
 communicationWebSocket.onmessage = function(e){
     rColor = 255;
     gColor = 255;
     bColor = 255;
     typeFigure = "cuadrado"
     refresh();
-    //infoData = JSON.parse(infoData);
-    //console.log(infodata);
+    if (e.data != "Connection established."){
+        infoData = JSON.parse(e.data);
+        //console.log(infoData);
+        //console.log(typeof infoData.reset);
+        if (infoData.hasOwn('reset')){
+            if (infoData.reset === "true"){
+                restart();
+            }
+        }
+        
+    }
+    
 };
 
 function isOpen(ws) { return ws.readyState === ws.OPEN }
+
