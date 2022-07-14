@@ -102,8 +102,9 @@ function restart(){
     axios.post('/restart');
     refresh();
     isReset = true;
-    let msg = '{ "reset": "' + isReset + '"}';
+    let msg = '{ "reset": "true" }';
     communicationWebSocket.send(msg);
+    isReset = false;
 }
 
 function BBServiceURL() {
@@ -117,7 +118,8 @@ function BBServiceURL() {
 function deleteLastFigure(){
     axios.post('/eraseLast');
     myp5.clear();
-    refresh();
+    communicationWebSocket.send('{ "last": "true" }')
+    refresh();   
 }
 
 function changeFigure(){
@@ -208,23 +210,24 @@ communicationWebSocket.onopen = function () {
     communicationWebSocket.send(msgSending);
 };
 
-let infoData = "";
+let infoData = null;
 communicationWebSocket.onmessage = function(e){
-    rColor = 255;
-    gColor = 255;
-    bColor = 255;
-    typeFigure = "cuadrado"
     refresh();
     if (e.data != "Connection established."){
         infoData = JSON.parse(e.data);
-        //console.log(infoData);
-        //console.log(typeof infoData.reset);
-        if (infoData.hasOwn('reset')){
+        //console.log(infoData)
+        //console.log(typeof infoData);
+        //console.log()
+        if (infoData != null){
+            console.log(infoData)
             if (infoData.reset === "true"){
-                restart();
+                myp5.clear();
+            }
+            if (infoData.last === "true"){
+                myp5.clear();
+                refresh();
             }
         }
-        
     }
     
 };
