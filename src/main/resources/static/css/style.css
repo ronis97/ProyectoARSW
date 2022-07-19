@@ -57,3 +57,11 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     width: 250px;
 }
+.objetos{
+    display: flex;
+    
+}
+.elemento{
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}

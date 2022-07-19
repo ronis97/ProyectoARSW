@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.escuelaing.arsw.proyecto.entities.Point;
 import edu.escuelaing.arsw.proyecto.entities.Board;
+import edu.escuelaing.arsw.proyecto.entities.Color;
 
 import java.util.List;
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class DrawingServiceController {
+
 
     @Resource
     private HttpServletRequest request;
@@ -54,6 +56,15 @@ public class DrawingServiceController {
         Board.getInstance().eraseLast();
     }
 
-    
+    @GetMapping("/getCurrentColorUser")
+    public Color getCurrentColorUser(){
+        return Board.getInstance().getCurrentColor();
+    }
+
+    @PostMapping("/changeCurrentColor")
+    public void changeColorCurrent(@RequestBody Color color){
+        Board.getInstance().setCurrentColor(color);
+    }
+
 
 }

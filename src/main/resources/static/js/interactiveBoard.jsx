@@ -7,9 +7,9 @@ let sizeOfFigure = 20;
 let user = null;
 let lastx = 0;
 let lasty = 0;
-let rColor = 255;
-let gColor = 255;
-let bColor = 255;
+var rColor = 255;
+var gColor = 255;
+var bColor = 255;
 let communicationWebSocket = new WebSocket(BBServiceURL());
 let msgSending = null;
 let isReset = false;
@@ -24,7 +24,6 @@ const setup = (p5) => {
 
     //Configuracion del tablero
     p5.draw = () => {
-        p5.fill(255);
         //p5.stroke(0);
         //p5.fill(255,255,255);
         //p5.rect(0,0,width,height);
@@ -49,17 +48,17 @@ const setup = (p5) => {
                 //console.log(figure)
             }
             //refresh();
-            var colorData = {r:rColor, g:gColor, b: bColor}
+            var colorData = {r:rColor, g:gColor, b: bColor};
             var dataFigure = {x:p5.mouseX, y:p5.mouseY, type:typeFigure, 
-                size:sizeOfFigure, nameuser:user, color:colorData}
+                size:sizeOfFigure, nameuser:user, color:colorData};
             //console.log(dataFigure);
             //console.log(user);
             msgSending = '{ "x": ' + (p5.mouseX) + ' ,"y": ' + (p5.mouseY) + ' ,"type": "' + typeFigure
-                + '" ,"size": ' + sizeOfFigure + ' ,"user": "' + user  + '" ,"rCol": ' + rColor 
-                + ' ,"gCol": ' + gColor + ',"bCol": ' + bColor +'}';
+                + '" ,"size": ' + sizeOfFigure + ' ,"user": "' + user  + '"}';
             //console.log(msgSending);
             communicationWebSocket.send(msgSending);
             axios.post('/drawpoints',dataFigure);
+            addelement();
         }   
     };
 };
@@ -77,9 +76,25 @@ function refresh(){
                 //user = points.data[i].nameuser;
                 putFigure(points.data[i].x, points.data[i].y,points.data[i].type);
             }
-
         }
     });
+    addelement();
+}
+
+function addelement() {
+    var completelist= document.getElementById("thelist");
+    
+    var points = axios.get('/drawpoints').then( points => {
+    for (var i = 0; i < points.data.length; i++){
+        let datas = document.createElement('div');
+        datas.id = "linea" + i;
+        datas.innerHTML = "x: " + points.data[i].x + "y: " + points.data[i].y;
+        completelist.append(datas);
+        let salto = document.createElement('br');
+        completelist.append(salto);
+    }
+    });
+    completelist.innerHTML = "";
 }
 
 function putFigure(x,y,typeOfFigure){
@@ -167,7 +182,7 @@ function hideElement(element){
 }
 
 function showElement(element){
-    console.log(typeof element)
+    //console.log(typeof element)
     if (element.id === "colorConfiguration"){
         element.style.display = 'grid';
     }
@@ -187,7 +202,7 @@ function submitValues(){
     let rr = document.getElementById('r').value;
     let gg = document.getElementById('g').value;
     let bb = document.getElementById('b').value;
-    console.log(rr);
+    //console.log(rr);
     if (rr ==="" || gg ==="" || bb === ""){
         document.getElementById('info').innerHTML 
             = "Alguno de los valores ingresados es nulo";
@@ -211,6 +226,15 @@ communicationWebSocket.onopen = function () {
 };
 
 let infoData = null;
+
+
+
+function resetColor(){
+    rColor = 255;
+    gColor = 255;
+    bColor = 255;
+    myp5.fill (rColor,gColor, bColor);
+}
 communicationWebSocket.onmessage = function(e){
     refresh();
     if (e.data != "Connection established."){
@@ -219,7 +243,7 @@ communicationWebSocket.onmessage = function(e){
         //console.log(typeof infoData);
         //console.log()
         if (infoData != null){
-            console.log(infoData)
+            console.log(infoData.changingColor === "true");
             if (infoData.reset === "true"){
                 myp5.clear();
             }

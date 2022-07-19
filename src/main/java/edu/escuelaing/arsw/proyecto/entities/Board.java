@@ -8,23 +8,32 @@ public class Board {
     private List<String> userList = new ArrayList<String>();
     private List<Point> pointList = new ArrayList<Point>();
     private static final Board instance = new Board();
+    private Color currentColor;
 
-    public static Board getInstance(){
+    public static Board getInstance() {
         return instance;
     }
 
-    public void addUser(String user){
+    public void addUser(String user) {
         userList.add(user);
     }
 
-    public void addPoint(Point point){
-        if(!pointList.contains(point)){
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+
+    public void setCurrentColor(Color currentColor) {
+        this.currentColor = currentColor;
+    }
+
+    public void addPoint(Point point) {
+        if (!pointList.contains(point)) {
             pointList.add(point);
         }
 
     }
 
-    public void restart(){
+    public void restart() {
         pointList.clear();
     }
 
@@ -44,20 +53,19 @@ public class Board {
         this.pointList = pointList;
     }
 
-    public void eraseLast(){
-        pointList.remove(pointList.size()-1);
+    public void eraseLast() {
+        pointList.remove(pointList.size() - 1);
     }
 
-    public boolean isValid(int x, int y){
+    public boolean isValid(int x, int y) {
         boolean isValid = true;
-        for (Point i: pointList){
-            if (i.getX() == x && i.getY() == y){ 
+        for (Point i : pointList) {
+            if (i.getX() == x && i.getY() == y) {
                 isValid = false;
                 break;
             }
         }
         return isValid;
     }
-
 
 }
