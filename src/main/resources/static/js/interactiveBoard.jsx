@@ -83,12 +83,26 @@ function refresh(){
 
 function addelement() {
     var completelist= document.getElementById("thelist");
-    
     var points = axios.get('/drawpoints').then( points => {
+        if (points.data.length == 0) {
+            completelist.display = 'none';
+        }
     for (var i = 0; i < points.data.length; i++){
         let datas = document.createElement('div');
+        let xBox = document.createElement('input');
+        xBox.className = "valores";
+        xBox.labels = 'x';
+        let divsepar = document.createElement('div');
+        divsepar.className = "divider";
+        let yBox = document.createElement('input');
+        yBox.className = "valores";
+        yBox.labels = 'x';
+        datas.append(xBox);
+        datas.append(divsepar);
+        datas.append(yBox);
         datas.id = "linea" + i;
-        datas.innerHTML = "x: " + points.data[i].x + "y: " + points.data[i].y;
+        //datas.innerHTML = "<input type='text' name='type' class = 'valores' value='" 
+        //    +points.data[i].x + "'>";
         completelist.append(datas);
         let salto = document.createElement('br');
         completelist.append(salto);

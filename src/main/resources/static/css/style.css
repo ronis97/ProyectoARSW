@@ -58,10 +58,17 @@ body{
     width: 250px;
 }
 .objetos{
-    display: flex;
-    
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    display: list-item;
+    list-style-type: none;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: scroll;
 }
-.elemento{
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+
+.valores{
+    width: 30px;
 }
