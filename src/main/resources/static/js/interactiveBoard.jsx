@@ -13,6 +13,7 @@ var bColor = 255;
 let communicationWebSocket = new WebSocket(BBServiceURL());
 let msgSending = null;
 let isReset = false;
+let showValues = true;
 const setup = (p5) => {
 
     
@@ -30,6 +31,7 @@ const setup = (p5) => {
         //resetea el tablero
     };
     p5.mouseClicked = () => {
+
         if (isValid(p5.mouseX, p5.mouseY)){
             lastx = p5.mouseX;
             lasty = p5.mouseY;
@@ -58,10 +60,23 @@ const setup = (p5) => {
             //console.log(msgSending);
             communicationWebSocket.send(msgSending);
             axios.post('/drawpoints',dataFigure);
-            addelement();
+            refresh();
         }   
     };
 };
+
+function showHideIndexes(){
+    let boton = document.getElementById("btn6");
+    showValues = !showValues;
+    if (showValues){
+        boton.innerHTML = "Ocultar indices";
+    }
+    else{
+        boton.innerHTML = "Mostrar indices"
+    }
+    myp5.clear();
+    refresh();
+}
 
 function refresh(){
     var points = axios.get('/drawpoints').then( points => {
@@ -74,7 +89,7 @@ function refresh(){
                 gColor = points.data[i].color.g;
                 bColor = points.data[i].color.b;
                 //user = points.data[i].nameuser;
-                putFigure(points.data[i].x, points.data[i].y,points.data[i].type);
+                putFigure(i,points.data[i].x, points.data[i].y,points.data[i].type);
             }
         }
     });
@@ -84,21 +99,39 @@ function refresh(){
 function addelement() {
     var completelist= document.getElementById("thelist");
     var points = axios.get('/drawpoints').then( points => {
-        if (points.data.length == 0) {
-            completelist.display = 'none';
+        //console.log(points.data.length);
+        if (points.data.length === 0) {
+            completelist.style.display = 'none';
+            completelist.style.overflow = 'hidden';
+        }
+        else{
+            completelist.style.display = 'list-item';
+            completelist.style.overflowY = 'scroll';
         }
     for (var i = 0; i < points.data.length; i++){
         let datas = document.createElement('div');
         let xBox = document.createElement('input');
         xBox.className = "valores";
-        //xBox.labels = 'x';
+        xBox.id = "datax" + i;
+        xBox.addEventListener("click",function(){
+            this.value = "";
+        });
+        let xlabel = document.createElement('label');
+        xlabel.innerHTML = "( "+i+" ) " + "x: ";
+        xlabel.htmlFor = "datax" + i;
+        xBox.value = points.data[i].x;
         let divsepar = document.createElement('div');
-        divsepar.className = "divider";
+        divsepar.className = "divider2";
         let yBox = document.createElement('input');
         yBox.className = "valores";
-        //yBox.labels = 'x';
+        let yLabel = document.createElement('label');
+        yLabel.innerHTML = "y: ";
+        yLabel.htmlFor = "datay" + i;
+        yBox.value = points.data[i].y;
+        datas.append(xlabel);
         datas.append(xBox);
         datas.append(divsepar);
+        datas.append(yLabel);
         datas.append(yBox);
         datas.id = "linea" + i;
         //datas.innerHTML = "<input type='text' name='type' class = 'valores' value='" 
@@ -111,7 +144,22 @@ function addelement() {
     completelist.innerHTML = "";
 }
 
-function putFigure(x,y,typeOfFigure){
+function changeValue(pos, newx, newy){
+
+}
+
+function putFigure(pos,x,y,typeOfFigure){
+    //console.log(pos + " " + x + " " + y);
+    if (showValues){
+        myp5.textSize(10);
+        myp5.fill(0,0,0);
+        if (typeOfFigure == "circulo" || typeOfFigure == "triangulo"){
+            myp5.text(pos,x+10,y-10);
+        }
+        else{
+            myp5.text(pos,x,y);
+        }
+    }
     myp5.fill(rColor,gColor,bColor);
     if (typeOfFigure == "circulo"){
         myp5.ellipse(x,y,sizeOfFigure,sizeOfFigure);
