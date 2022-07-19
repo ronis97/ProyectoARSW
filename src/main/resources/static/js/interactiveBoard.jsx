@@ -91,12 +91,12 @@ function addelement() {
         let datas = document.createElement('div');
         let xBox = document.createElement('input');
         xBox.className = "valores";
-        xBox.labels = 'x';
+        //xBox.labels = 'x';
         let divsepar = document.createElement('div');
         divsepar.className = "divider";
         let yBox = document.createElement('input');
         yBox.className = "valores";
-        yBox.labels = 'x';
+        //yBox.labels = 'x';
         datas.append(xBox);
         datas.append(divsepar);
         datas.append(yBox);
