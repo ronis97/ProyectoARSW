@@ -37,7 +37,7 @@ public class DrawingServiceController {
 
     @GetMapping("/drawpoints")
     public List<Point> getAllPoints(){
-        System.out.print(Board.getInstance().getPointList().size());
+        //System.out.print(Board.getInstance().getPointList().size());
         //System.out.println(Board.getInstance().getPointList().get(0).getUserName());
         return Board.getInstance().getPointList();
     }

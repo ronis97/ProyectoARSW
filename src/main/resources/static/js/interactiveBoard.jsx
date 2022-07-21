@@ -80,6 +80,7 @@ function showHideIndexes(){
 
 function refresh(){
     let completelist = document.getElementById("thelist");
+    let changeButton = document.getElementById("changeDiv");
     myp5.clear();
     //document.getElementById("thelist").innerHTML = "";
     var points = axios.get('/drawpoints').then( points => {
@@ -99,10 +100,12 @@ function refresh(){
         if (points.data.length === 0) {
             completelist.style.display = 'none';
             completelist.style.overflow = 'hidden';
+            changeButton.style.display = "none";
         }
         else{
             completelist.style.display = 'list-item';
             completelist.style.overflowY = 'scroll';
+            changeButton.style.display = "flex"
         }
     });
     
@@ -116,6 +119,7 @@ function addelement() {
         
         for (var i = 0; i < points.data.length; i++){
             let datas = document.createElement('div');
+            datas.id = "div"+i;
             let xBox = document.createElement('input');
             xBox.className = "valores";
             xBox.id = "datax" + i;
@@ -158,6 +162,19 @@ function addelement() {
     refresh();
     //refresh();
 }
+
+function updateValues(){
+    var points = axios.get('/drawpoints').then( points => {
+        for (var i = 0; i < points.data.length; i++){
+            let xBox = document.getElementById("datax"+i);
+            let yBox = document.getElementById("datay"+i);
+            xBox.value = points.data[i].x;
+            yBox.value = points.data[i].y;
+        }
+    });
+    refresh();
+}
+
 //console.log (document.getElementById("datax0"));
 function changeValues(){
     myp5.clear();
@@ -177,8 +194,8 @@ function changeValues(){
             }
         }
     });
+    communicationWebSocket.send('{ "change": "true" }');
     myp5.clear();
-    refresh();
     refresh();
     //console.log(points)
 }
@@ -247,6 +264,13 @@ function deleteLastFigure(){
     myp5.clear();
     communicationWebSocket.send('{ "last": "true" }')
     refresh();   
+}
+
+function deleteLastDiv(){
+    let listOfDivs = document.getElementById("thelist");
+    let count = listOfDivs.getElementsByTagName('div').length;
+    let last = document.getElementById()
+    listOfDivs.parentNode.removeChild()
 }
 
 function changeFigure(){
@@ -360,10 +384,15 @@ communicationWebSocket.onmessage = function(e){
             console.log(infoData.changingColor === "true");
             if (infoData.reset === "true"){
                 myp5.clear();
+                updateValues();
             }
             if (infoData.last === "true"){
                 myp5.clear();
                 refresh();
+            }
+            if (infoData.change === "true"){
+                myp5.clear();
+                updateValues();
             }
         }
     }
