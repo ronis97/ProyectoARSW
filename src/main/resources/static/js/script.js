@@ -6,11 +6,13 @@ function getValue(){
 }
 
 function validateValue(){
-    let data = document.getElementById("data");
+    let data = document.getElementById("box");
+    let box = document.getElementById("data");
     if (data.value != ""){
+        location.href = "drawingBoard.html";
         return data.value;
     }
     else{
-        window.prompt("No ha ingresado usuario valido");
+        window.alert("No ha ingresado usuario valido");
     }
 }
