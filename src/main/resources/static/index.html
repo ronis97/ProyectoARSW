@@ -1,105 +1,23 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-    <title>Interactive BB</title>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="js/interactiveBoard.jsx" type="text/babel"></script>
-    <h1>Bienvenido a Drawing Figurines</h1>
-    
-    
-    <!--<button id="btn4" type="button" class="button" onClick="refresh()" value="">Actualizar</button>-->
-    
-
-    
-
-    <!--libreria p5-->  
-    <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
-    <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js">
-    </script>
-    <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js">
-    </script>
-    
+    <title>Drawing Figurines</title>
+    <script src="js/script.js"></script>
 </head>
 <body>
+    <link href='css/text.css' rel='stylesheet' type='text/css'>
     
-    <script src="https://unpkg.com/react@16/umd/react.development.js"
-            crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <!-- Load babel to translate JSX to js. -->
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js">
-    </script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <div class="botones" id="botones">
-        <button type="button" class="button" onClick=restart()>    
-            Reiniciar
-        </button>
-        <div class="divider1"></div>
-        <button id="btn2" type="button" class="button" onClick="changeFigure()" value="">
-            Cambiar figura
-        </button>
-        <div class="divider1"></div>
-        <button id="btn3" type="button" class="button" onClick="changeSize()" value="">
-            Cambiar tamaño
-        </button>
-        <div class="divider"></div>
-    </div>
-    <p></p>
-    <div class="botones2" id="botones1">
-        <button id="btn6" type="button" class="button" onClick="showHideIndexes()" value="">
-            Mostrar indices
-        </button>
-        <div class="divider2"></div>
-        <button id="btn4" type="button" class="button" onClick="deleteLastFigure()" value="">
-            Borrar ultima figura
-        </button>
-        <div class="divider2"></div>
-        <button id="btn5" type="button" class="button" onClick="changeColor()">
-            Cambiar color
-        </button>
-    </div>
+
+    <div class="box">
+    <h1>Bienvenido</h1>
+
+    <input type="text" id="box"  value="usuario" onClick="getValue()" class="email">
     
-    <p></p>
-    <p></p>
-    <div id="p5Sketch" class="tablero"></div>
+    <a href="drawingBoard.html" id="data"  onClick="validateValue()"><div class="btn">Ingresar</div></a> <!-- End Btn -->
     
-    
-    <div id="colorConfiguration" class="wrapper">
-        <label class="datos">
-            R (cantidad de rojo 0-255) 
-        </label>
-        <input type="text" id="r" name="r" class="datos" >
-        <label class="datos">
-            G (cantidad de verde 0-255)
-        </label>
-        <input type="text" id="g" name="g" class="datos" >
-        <label class="datos">
-            B (cantidad de azul 0-255)
-        </label>
-        <input type="text" id="b" name="b" class="datos" >
-        <button id="btn6" type="button" class="button" onClick="submitValues()">
-            Cambiar color
-        </button>
-        <label class="datos"  id="info">
-            Ingrese los valores RGB
-        </label>
-    </div>
-    <p></p>
-    <div id="changeDiv" class="botones2">
-        <button id="btn7" type="button" class="button" onClick="changeValues()">
-            Cambiar posiciones
-        </button>
-    </div>
-    <p></p>
-    <p></p>
-    <div id="thelist" class="objetos">
-    </div>
-    <!-- Load our React component. -->
+    </div> <!-- End Box -->
     
 </body>
 </html>

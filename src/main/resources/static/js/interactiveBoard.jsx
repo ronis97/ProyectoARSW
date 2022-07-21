@@ -2,7 +2,7 @@
 let width = 400;
 let height = 400;
 let index = 0;
-let typeFigure = null;
+let typeFigure = "cuadrado";
 let sizeOfFigure = 20;
 let user = null;
 let lastx = 0;
@@ -14,13 +14,47 @@ let communicationWebSocket = new WebSocket(BBServiceURL());
 let msgSending = null;
 let isReset = false;
 let showValues = true;
+
+communicationWebSocket.onmessage = function(e){
+    refresh();
+    if (e.data != "Connection established."){
+        infoData = JSON.parse(e.data);
+        //console.log(infoData)
+        //console.log(typeof infoData);
+        //console.log()
+        if (infoData != null){
+            console.log(infoData.changingColor === "true");
+            if (infoData.reset === "true"){
+                myp5.clear();
+                updateValues();
+            }
+            if (infoData.last === "true"){
+                myp5.clear();
+                deleteLastDiv();
+                refresh();
+            }
+            if (infoData.change === "true"){
+                myp5.clear();
+                updateValues();
+            }
+            if (infoData.changefigure === "true"){
+                typeFigure = infoData.figure;
+                console.log(typeFigure);
+            }
+            else{
+                addelement();
+            }
+        }
+    }
+    
+};
 const setup = (p5) => {
 
     
     //Configuracion inicial
     p5.setup = () => {
       p5.createCanvas(width, height).parent("p5Sketch");
-      changeFigure();
+      var btn = document.getElementById("btn2");
     };
 
     //Configuracion del tablero
@@ -253,8 +287,8 @@ function restart(){
 
 function BBServiceURL() {
     var host = window.location.host;
-    var url = 'wss://' + (host) + '/bbService';
-    //var url = 'ws://' + (host) + '/bbService';
+    //var url = 'wss://' + (host) + '/bbService';
+    var url = 'ws://' + (host) + '/bbService';
     //console.log("URL Calculada: " + url);
     return url;
 }
@@ -282,8 +316,6 @@ function changeFigure(){
     if (index > 2){index = 0}
     let listOfFigures = ["triangulo", "cuadrado", "circulo"];
     typeFigure = listOfFigures[index];
-    btn.innerHTML = "Cambiar figura: " + typeFigure;
-    //communicationWebSocket.send('{ "changefigure": "true"'+ '"figure": "'+ typeFigure + '" }');
     //console.log(typeFigure);
 }
 
@@ -376,39 +408,7 @@ function resetColor(){
     bColor = 255;
     myp5.fill (rColor,gColor, bColor);
 }
-communicationWebSocket.onmessage = function(e){
-    refresh();
-    if (e.data != "Connection established."){
-        infoData = JSON.parse(e.data);
-        //console.log(infoData)
-        //console.log(typeof infoData);
-        //console.log()
-        if (infoData != null){
-            console.log(infoData.changingColor === "true");
-            if (infoData.reset === "true"){
-                myp5.clear();
-                updateValues();
-            }
-            if (infoData.last === "true"){
-                myp5.clear();
-                deleteLastDiv();
-                refresh();
-            }
-            if (infoData.change === "true"){
-                myp5.clear();
-                updateValues();
-            }
-            if (infoData.changefigure === "true"){
-                typeFigure = infoData.figure;
-                document.getElementById("btn2").innerHTML = "Cambiar figura: "+typeFigure;
-            }
-            else{
-                addelement();
-            }
-        }
-    }
-    
-};
+
 
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 
