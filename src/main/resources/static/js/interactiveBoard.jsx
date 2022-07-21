@@ -119,7 +119,6 @@ function addelement() {
         
         for (var i = 0; i < points.data.length; i++){
             let datas = document.createElement('div');
-            datas.id = "div"+i;
             let xBox = document.createElement('input');
             xBox.className = "valores";
             xBox.id = "datax" + i;
@@ -154,6 +153,7 @@ function addelement() {
             datas.append(yLabel);
             datas.append(yBox);
             datas.id = "linea" + i;
+            datas.className="infoss";
             completelist.append(datas);
             let salto = document.createElement('br');
             completelist.append(salto);
@@ -253,8 +253,8 @@ function restart(){
 
 function BBServiceURL() {
     var host = window.location.host;
-    //var url = 'wss://' + (host) + '/bbService';
-    var url = 'ws://' + (host) + '/bbService';
+    var url = 'wss://' + (host) + '/bbService';
+    //var url = 'ws://' + (host) + '/bbService';
     //console.log("URL Calculada: " + url);
     return url;
 }
@@ -264,13 +264,15 @@ function deleteLastFigure(){
     myp5.clear();
     communicationWebSocket.send('{ "last": "true" }')
     refresh();   
+    deleteLastDiv();
 }
 
 function deleteLastDiv(){
     let listOfDivs = document.getElementById("thelist");
-    let count = listOfDivs.getElementsByTagName('div').length;
-    let last = document.getElementById()
-    listOfDivs.parentNode.removeChild()
+    let count = listOfDivs.getElementsByClassName("infoss").length;
+    let last = document.getElementById("linea"+(count-1));
+    console.log(count);
+    listOfDivs.removeChild(last);
 }
 
 function changeFigure(){
@@ -281,6 +283,7 @@ function changeFigure(){
     let listOfFigures = ["triangulo", "cuadrado", "circulo"];
     typeFigure = listOfFigures[index];
     btn.innerHTML = "Cambiar figura: " + typeFigure;
+    //communicationWebSocket.send('{ "changefigure": "true"'+ '"figure": "'+ typeFigure + '" }');
     //console.log(typeFigure);
 }
 
@@ -388,11 +391,19 @@ communicationWebSocket.onmessage = function(e){
             }
             if (infoData.last === "true"){
                 myp5.clear();
+                deleteLastDiv();
                 refresh();
             }
             if (infoData.change === "true"){
                 myp5.clear();
                 updateValues();
+            }
+            if (infoData.changefigure === "true"){
+                typeFigure = infoData.figure;
+                document.getElementById("btn2").innerHTML = "Cambiar figura: "+typeFigure;
+            }
+            else{
+                addelement();
             }
         }
     }
