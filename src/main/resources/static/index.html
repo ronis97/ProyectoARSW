@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css" />
-    
+    <script src="js/interactiveBoard.jsx" type="text/babel"></script>
     <h1>Bienvenido a Drawing Figurines</h1>
     
     
@@ -24,9 +24,17 @@
     <script
             src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js">
     </script>
+    
 </head>
 <body>
-
+    
+    <script src="https://unpkg.com/react@16/umd/react.development.js"
+            crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load babel to translate JSX to js. -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js">
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <div class="botones" id="botones">
         <button type="button" class="button" onClick=restart()>    
             Reiniciar
@@ -55,16 +63,12 @@
             Cambiar color
         </button>
     </div>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"
-            crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <!-- Load babel to translate JSX to js. -->
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js">
-    </script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
     <p></p>
     <p></p>
     <div id="p5Sketch" class="tablero"></div>
+    
+    
     <div id="colorConfiguration" class="wrapper">
         <label class="datos">
             R (cantidad de rojo 0-255) 
@@ -86,9 +90,16 @@
         </label>
     </div>
     <p></p>
+    <div id="" class="botones2">
+        <button id="btn7" type="button" class="button" onClick="changeValues()">
+            Cambiar posiciones
+        </button>
+    </div>
+    <p></p>
+    <p></p>
     <div id="thelist" class="objetos">
     </div>
     <!-- Load our React component. -->
-    <script src="js/interactiveBoard.jsx" type="text/babel"></script>
+    
 </body>
 </html>

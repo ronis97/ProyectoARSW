@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import edu.escuelaing.arsw.proyecto.entities.Point;
 import edu.escuelaing.arsw.proyecto.entities.Board;
 import edu.escuelaing.arsw.proyecto.entities.Color;
+import edu.escuelaing.arsw.proyecto.entities.Coordinate;
 
 import java.util.List;
 import javax.annotation.Resource;
@@ -66,5 +67,8 @@ public class DrawingServiceController {
         Board.getInstance().setCurrentColor(color);
     }
 
-
+    @PostMapping("/getNewCoordinates")
+    public void changePointsPosition(@RequestBody Coordinate coordinate){
+        Board.getInstance().changePointsPosition(coordinate);;
+    }
 }

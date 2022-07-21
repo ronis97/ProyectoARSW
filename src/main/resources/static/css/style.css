@@ -41,6 +41,11 @@ body{
     height: auto;
     display: inline-block;
 }
+.superdiv{
+    display: block;
+    padding: 0%;
+}
+
 .tablero{
     background-color: aliceblue;
     margin-left: auto;
@@ -65,7 +70,7 @@ body{
 }
 .objetos{
     width: 200px;
-    height: 200px;
+    height: 100px;
     padding: 10px;
     display: list-item;
     list-style-type: none;
@@ -79,8 +84,4 @@ body{
     background-color: #ffffff;
     width: 30px;
     opacity: 0.4;
-}
-
-.valores:focus{
-    
 }

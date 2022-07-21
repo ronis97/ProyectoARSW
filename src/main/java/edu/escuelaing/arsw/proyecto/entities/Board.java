@@ -33,6 +33,14 @@ public class Board {
 
     }
 
+    public void changePointsPosition(Coordinate coordinate){
+        int position = coordinate.getPosition();
+        int x = coordinate.getX();
+        int y = coordinate.getY();
+        pointList.get(position).setX(x);
+        pointList.get(position).setY(y);
+    }
+
     public void restart() {
         pointList.clear();
     }

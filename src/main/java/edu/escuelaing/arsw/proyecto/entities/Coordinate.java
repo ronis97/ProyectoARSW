@@ -3,6 +3,7 @@ package edu.escuelaing.arsw.proyecto.entities;
 public class Coordinate {
     private int x;
     private int y;
+    private int position;
     public int getX(){
         return this.x;
     }
@@ -17,5 +18,13 @@ public class Coordinate {
 
     public void setY(int y){
         this.y = y;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

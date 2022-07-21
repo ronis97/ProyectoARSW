@@ -61,6 +61,7 @@ const setup = (p5) => {
             communicationWebSocket.send(msgSending);
             axios.post('/drawpoints',dataFigure);
             refresh();
+            addelement();
         }   
     };
 };
@@ -74,12 +75,15 @@ function showHideIndexes(){
     else{
         boton.innerHTML = "Mostrar indices"
     }
-    myp5.clear();
     refresh();
 }
 
 function refresh(){
+    let completelist = document.getElementById("thelist");
+    myp5.clear();
+    //document.getElementById("thelist").innerHTML = "";
     var points = axios.get('/drawpoints').then( points => {
+        
         //restart();
         if (points.data != null){
             for (var i = 0; i < points.data.length; i++){
@@ -92,14 +96,6 @@ function refresh(){
                 putFigure(i,points.data[i].x, points.data[i].y,points.data[i].type);
             }
         }
-    });
-    addelement();
-}
-
-function addelement() {
-    var completelist= document.getElementById("thelist");
-    var points = axios.get('/drawpoints').then( points => {
-        //console.log(points.data.length);
         if (points.data.length === 0) {
             completelist.style.display = 'none';
             completelist.style.overflow = 'hidden';
@@ -108,45 +104,99 @@ function addelement() {
             completelist.style.display = 'list-item';
             completelist.style.overflowY = 'scroll';
         }
-    for (var i = 0; i < points.data.length; i++){
-        let datas = document.createElement('div');
-        let xBox = document.createElement('input');
-        xBox.className = "valores";
-        xBox.id = "datax" + i;
-        xBox.addEventListener("click",function(){
-            this.value = "";
-        });
-        let xlabel = document.createElement('label');
-        xlabel.innerHTML = "( "+i+" ) " + "x: ";
-        xlabel.htmlFor = "datax" + i;
-        xBox.value = points.data[i].x;
-        let divsepar = document.createElement('div');
-        divsepar.className = "divider2";
-        let yBox = document.createElement('input');
-        yBox.className = "valores";
-        let yLabel = document.createElement('label');
-        yLabel.innerHTML = "y: ";
-        yLabel.htmlFor = "datay" + i;
-        yBox.value = points.data[i].y;
-        datas.append(xlabel);
-        datas.append(xBox);
-        datas.append(divsepar);
-        datas.append(yLabel);
-        datas.append(yBox);
-        datas.id = "linea" + i;
-        //datas.innerHTML = "<input type='text' name='type' class = 'valores' value='" 
-        //    +points.data[i].x + "'>";
-        completelist.append(datas);
-        let salto = document.createElement('br');
-        completelist.append(salto);
-    }
     });
+    
+}
+
+function addelement() {
+    var completelist= document.getElementById("thelist");
     completelist.innerHTML = "";
+    var points = axios.get('/drawpoints').then( points => {
+        //console.log(points.data.length);
+        
+        for (var i = 0; i < points.data.length; i++){
+            let datas = document.createElement('div');
+            let xBox = document.createElement('input');
+            xBox.className = "valores";
+            xBox.id = "datax" + i;
+            let xlabel = document.createElement('label');
+            xlabel.innerHTML = "( "+i+" ) " + "x: ";
+            xlabel.htmlFor = "datax" + i;
+            xBox.value = points.data[i].x;
+       //     xBox.addEventListener("click",function(){
+       //         this.value = "";
+      //      });
+            let divsepar = document.createElement('div');
+            divsepar.className = "divider2";
+            let yBox = document.createElement('input');
+            yBox.className = "valores";
+            yBox.id = "datay"+i;
+            let yLabel = document.createElement('label');
+            yLabel.innerHTML = "y: ";
+            yLabel.htmlFor = "datay" + i;
+            yBox.value = points.data[i].y;
+            //yBox.addEventListener("click",function(){
+         //       this.value = "";
+        //    });
+            xBox.addEventListener("click",function() {
+                xBox.value = "";
+            });
+            yBox.addEventListener("click",function() {
+                yBox.value = "";
+            });
+            datas.append(xlabel);
+            datas.append(xBox);
+            datas.append(divsepar);
+            datas.append(yLabel);
+            datas.append(yBox);
+            datas.id = "linea" + i;
+            completelist.append(datas);
+            let salto = document.createElement('br');
+            completelist.append(salto);
+        }
+    });
+    refresh();
+    //refresh();
+}
+//console.log (document.getElementById("datax0"));
+function changeValues(){
+    myp5.clear();
+    let longitud = 0;
+    var points = axios.get('/drawpoints').then(points =>{
+        longitud = points.data.length;
+        for (var i = 0; i < longitud; i++){
+            let xBoxx = document.getElementById("datax"+i);
+            let yBoxx = document.getElementById("datay"+i);
+            console.log(xBoxx,yBoxx);
+            let xValue = xBoxx.value;
+            let yValue = yBoxx.value;
+            if (xValue != "" || yValue  != ""){
+                if (isChange(points.data[i].x,points.data[i].y,xValue,yValue)){
+                    sendValues(i,xValue,yValue);
+                }
+            }
+        }
+    });
+    myp5.clear();
+    refresh();
+    refresh();
+    //console.log(points)
 }
 
-function changeValue(pos, newx, newy){
-
+function isChange(x,y, newx, newy){
+    let flag = false;
+    if (x != newx || y != newy){
+        flag = true;
+    }
+    return flag;
 }
+
+function sendValues(pos,newx,newy){
+    let coordinates = {x: newx, y: newy, position:pos};
+    axios.post('/getNewCoordinates',coordinates);
+    //console.log("funciona xD");
+}
+
 
 function putFigure(pos,x,y,typeOfFigure){
     //console.log(pos + " " + x + " " + y);
@@ -223,6 +273,7 @@ function requestUserName(){
     while (user == null){
         user = window.prompt("No ha ingresado un usuario: ")
     }
+    refresh();
     //console.log(user);
     //return user;
 }
@@ -282,7 +333,8 @@ function submitValues(){
 
 let myp5 = new p5(setup,document.getElementById('p5Sketch'));
 requestUserName();
-refresh();
+window.onload = refresh;
+//window.onload = addelement;
 communicationWebSocket.onopen = function () {
     communicationWebSocket.send(msgSending);
 };
