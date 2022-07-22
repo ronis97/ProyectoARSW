@@ -354,6 +354,9 @@ function showElement(element){
     if (element.id === "colorConfiguration"){
         element.style.display = 'grid';
     }
+    else if(element.id === "thelist"){
+        element.style.display = 'list-item';
+    }
     else{
         element.style.display = 'flex';
     }
@@ -363,6 +366,8 @@ function changeColor(){
     hideElement(document.getElementById('p5Sketch'));
     hideElement(document.getElementById('botones'));
     hideElement(document.getElementById('botones1'));
+    hideElement(document.getElementById("thelist"));
+    hideElement(document.getElementById("btn7"));
     showElement(document.getElementById('colorConfiguration'));
 }
 
@@ -383,6 +388,8 @@ function submitValues(){
         showElement(document.getElementById('botones'));
         showElement(document.getElementById('botones1'));
         showElement(document.getElementById('p5Sketch'));
+        showElement(document.getElementById("thelist"));
+        showElement(document.getElementById("btn7"));
     }
 }
 

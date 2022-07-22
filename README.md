@@ -1,10 +1,14 @@
 # Drawing Figurines
 
-## Edgar Ronaldo Henao V.
+## Autor:
+### Edgar Ronaldo Henao V.
 
-Resumen en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
+Aplicativo web desarrollado con Javascript (react) en el cliente y Java en el servidor, el proposito es desarrollar dibujos usando figuras geometricas básicas
+(triangulo, rectangulo y circulo) modificando el tamaño como se desee, el color e incluso hasta para lograr mayor exactitud con coordenadas (x,y). Se hace uso de la libreria p5 de javascript y el framework spring para el backend.
+[wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
 ### Descripción del producto
+
 
 Descripcion en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
@@ -14,7 +18,8 @@ Historias de uso en [wiki](https://github.com/ronis97/ProyectoARSW/wiki)
 
 ### Javadocs
 
-La documentacion [(javadocs)](https://ronis97.github.io/ProyectoARSW/) 
+[(javadocs)](https://ronis97.github.io/ProyectoARSW/) 
+El link anterior presenta la documentacion realizada del back-end.
 
 
 ### Despliegue heroku
