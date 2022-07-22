@@ -80,6 +80,9 @@ body{
     overflow-y: scroll;
 }
 
+.infodata{
+    font-family: Arial, Helvetica, sans-serif;
+}
 .valores{
     background-color: #ffffff;
     width: 30px;

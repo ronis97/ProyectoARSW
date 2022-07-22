@@ -19,9 +19,6 @@ communicationWebSocket.onmessage = function(e){
     refresh();
     if (e.data != "Connection established."){
         infoData = JSON.parse(e.data);
-        //console.log(infoData)
-        //console.log(typeof infoData);
-        //console.log()
         if (infoData != null){
             console.log(infoData.changingColor === "true");
             if (infoData.reset === "true"){
@@ -119,7 +116,6 @@ function refresh(){
     //document.getElementById("thelist").innerHTML = "";
     var points = axios.get('/drawpoints').then( points => {
         
-        //restart();
         if (points.data != null){
             for (var i = 0; i < points.data.length; i++){
                 sizeOfFigure = points.data[i].size;
@@ -159,6 +155,7 @@ function addelement() {
             let xlabel = document.createElement('label');
             xlabel.innerHTML = "( "+i+" ) " + "x: ";
             xlabel.htmlFor = "datax" + i;
+            xlabel.className = "infodata";
             xBox.value = points.data[i].x;
        //     xBox.addEventListener("click",function(){
        //         this.value = "";
@@ -171,6 +168,7 @@ function addelement() {
             let yLabel = document.createElement('label');
             yLabel.innerHTML = "y: ";
             yLabel.htmlFor = "datay" + i;
+            yLabel.className = "infodata"
             yBox.value = points.data[i].y;
             //yBox.addEventListener("click",function(){
          //       this.value = "";
@@ -287,9 +285,8 @@ function restart(){
 
 function BBServiceURL() {
     var host = window.location.host;
-    //var url = 'wss://' + (host) + '/bbService';
-    var url = 'ws://' + (host) + '/bbService';
-    //console.log("URL Calculada: " + url);
+    var url = 'wss://' + (host) + '/bbService';
+    //var url = 'ws://' + (host) + '/bbService';
     return url;
 }
 
@@ -328,10 +325,9 @@ function changeSize(){
 }
 
 function requestUserName(){
-    user = window.prompt("Ingrese su nombre de usuario: ");
-    while (user == null){
-        user = window.prompt("No ha ingresado un usuario: ")
-    }
+    user = localStorage.getItem("username");
+    let titulo = document.getElementById("titulo");
+    titulo.innerHTML = "Usuario:  "+user;
     refresh();
     //console.log(user);
     //return user;
@@ -392,15 +388,11 @@ function submitValues(){
 
 let myp5 = new p5(setup,document.getElementById('p5Sketch'));
 requestUserName();
-window.onload = refresh;
-//window.onload = addelement;
 communicationWebSocket.onopen = function () {
     communicationWebSocket.send(msgSending);
 };
 
 let infoData = null;
-
-
 
 function resetColor(){
     rColor = 255;
@@ -409,6 +401,4 @@ function resetColor(){
     myp5.fill (rColor,gColor, bColor);
 }
 
-
-function isOpen(ws) { return ws.readyState === ws.OPEN }
 

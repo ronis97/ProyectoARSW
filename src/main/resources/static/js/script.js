@@ -10,7 +10,7 @@ function validateValue(){
     let box = document.getElementById("data");
     if (data.value != ""){
         location.href = "drawingBoard.html";
-        return data.value;
+        localStorage.setItem("username",data.value);
     }
     else{
         window.alert("No ha ingresado usuario valido");

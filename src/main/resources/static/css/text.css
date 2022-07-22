@@ -1,10 +1,9 @@
 body{
     font-family: 'Open Sans', sans-serif;
-    background:#3498db;
-    margin: 0 auto 0 auto;  
     width:100%; 
+    background: url('https://c8.alamy.com/compes/mf5caa/patron-grafico-de-figuras-geometricas-de-color-de-fondo-mf5caa.jpg') no-repeat center top;
     text-align:center;
-    margin: 20px 0px 20px 0px;   
+    margin: 20px 0px 20px 0px; 
   }
   
   p{
@@ -19,16 +18,19 @@ body{
   }
   
   .box{
-    background:white;
+    position: flex;
+    height: 200px;
+    background: white;
     width:300px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius:6px;
-    margin: 0 auto 0 auto;
     padding:0px 0px 70px 0px;
     border: #2980b9 4px solid; 
   }
   
   .email{
-    background:#ecf0f1;
+    background: #ecf0f1;
     border: #ccc 1px solid;
     border-bottom: #ccc 2px solid;
     padding: 8px;
