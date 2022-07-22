@@ -1,5 +1,9 @@
 package edu.escuelaing.arsw.proyecto.entities;
 
+/**
+ * Clase que representa el color de una figura por
+ * medio de su codigo RGB
+ */
 public class Color {
     private int r;
     private int g;

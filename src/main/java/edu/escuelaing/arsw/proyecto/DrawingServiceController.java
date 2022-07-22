@@ -22,6 +22,10 @@ public class DrawingServiceController {
     @Resource
     private HttpServletRequest request;
 
+    /**
+     * Prueba del servidor corriendo exitosamente
+     * @return una pagina web sencilla en la que notifica el momento actual de la consulta
+     */
     @GetMapping("/status")
     public String status() {
         return "{\"status\":\"Greetings from Spring Boot. " +
@@ -30,43 +34,48 @@ public class DrawingServiceController {
                 ". " + "The server is Runnig!\"}";
     }
 
-    @GetMapping("/setname")
-    public String stringRequest(@RequestParam(value = "name", defaultValue = "World") String name){
-        return null;
-    }
-
+    /**
+     * Devuelve la lista de figuras hechas en el tablero
+     * @return la lista con las figuras
+     */
     @GetMapping("/drawpoints")
     public List<Point> getAllPoints(){
-        //System.out.print(Board.getInstance().getPointList().size());
-        //System.out.println(Board.getInstance().getPointList().get(0).getUserName());
         return Board.getInstance().getPointList();
     }
 
+    /**
+     * Agrega una figura al tablero
+     * @param point La figura que sera agregada, este
+     *              objeto es un diccionario con cada dato especificado
+     *              en el cliente.
+     */
     @PostMapping("/drawpoints")
     public void addPoints(@RequestBody Point point){
         Board.getInstance().addPoint(point);
     }
 
+    /**
+     * Elimina todas las figuras guardadas en el tablero
+     */
     @PostMapping("/restart")
     public void restart(){
         Board.getInstance().restart();
     }
 
+    /**
+     * Borra la ultima figura realizada
+     */
     @PostMapping("/eraseLast")
     public void eraseLastObject(){
         Board.getInstance().eraseLast();
     }
 
-    @GetMapping("/getCurrentColorUser")
-    public Color getCurrentColorUser(){
-        return Board.getInstance().getCurrentColor();
-    }
-
-    @PostMapping("/changeCurrentColor")
-    public void changeColorCurrent(@RequestBody Color color){
-        Board.getInstance().setCurrentColor(color);
-    }
-
+    /**
+     * Cambia las coordenadas (x,y) de una figura con el indice
+     * especificado en el objeto coordinate
+     * @param coordinate El objeto con la informacion de las coordenadas
+     *                   y su posicion en el array de figuras
+     */
     @PostMapping("/getNewCoordinates")
     public void changePointsPosition(@RequestBody Coordinate coordinate){
         Board.getInstance().changePointsPosition(coordinate);;

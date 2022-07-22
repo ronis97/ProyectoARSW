@@ -13,6 +13,10 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase que se encarga del manejo del websocket en el cliente y permite
+ * ver entre otras cosas los mensajes recibidos entre sesiones.
+ */
 @Component
 @ServerEndpoint("/bbService")
 public class BBEndpoint {
